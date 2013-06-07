@@ -16,11 +16,17 @@ HTTP Access API
 Expected API
 
 Request:
+
     GET /auth/RESOURCE_NAME/TAG_ID HTTP/1.0
+i.e.
+
+    GET /auth/doors/A1B2C3D
 
 Authorized Response:
+
     200 OK
 
 Unauthorized Response:
+
     401 Unauthorized
 
