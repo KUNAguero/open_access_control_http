@@ -45,6 +45,9 @@
 #include <WIEGAND26.h>    // Wiegand 26 reader format libary
 #include <PCATTACH.h>     // Pcint.h implementation, allows for >2 software interupts
 
+// Include w5100 util so we can set a connect() timeout because Arduino is stupid
+#include <utility/w5100.h>
+
 // Create an instance of the various C++ libraries we are using.
 WIEGAND26 wiegand26;  // Wiegand26 (RFID reader serial protocol) library
 PCATTACH pcattach;    // Software interrupt library
@@ -145,6 +148,12 @@ void setup() {
   pinMode(10, OUTPUT);
 
   Ethernet.begin(mac, ip);
+
+  // This sets a timeout so we don't hang around waiting for 30+ seconds
+  // if the server isn't running or isn't responding.
+  // We have an SD auth cache, so lets use it!
+  W5100.setRetransmissionTime(0x07D0);
+  W5100.setRetransmissionCount(2);
 
   Serial.println("OpenAccess HTTP started...");
 
